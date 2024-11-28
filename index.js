@@ -1,7 +1,7 @@
 module.exports = function ({ addComponents, theme }) {
   const screens = theme('screens');
   const userStyles = theme('debugScreens.style', {});
-  const ignoredScreens = theme('debugScreens.ignore', ['dark']);
+  const ignoredScreens = theme('debugScreens.ignore', ['__CSS_VALUES__']);
   const prefix = theme('debugScreens.prefix', 'screen: ');
   const selector = theme('debugScreens.selector', '.debug-screens');
 
@@ -30,10 +30,10 @@ module.exports = function ({ addComponents, theme }) {
   Object.entries(screens)
     .filter(([screen]) => !ignoredScreens.includes(screen))
     .forEach(([screen]) => {
-      components[`@screen ${screen}`] = {
-        [`${selector}::before`]: {
-          content: `'${prefix}${screen}'`,
-        },
+      components[`${selector}::before`][
+        `@media (width >= theme(--breakpoint-${screen}))`
+      ] = {
+        content: `'${prefix}${screen}'`,
       };
     });
 
