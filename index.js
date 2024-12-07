@@ -31,7 +31,7 @@ module.exports = function ({ addComponents, theme }) {
     .filter(([screen]) => !ignoredScreens.includes(screen))
     .forEach(([screen]) => {
       components[`${selector}::before`][
-        `@media (width >= theme(--breakpoint-${screen}))`
+        `@media (width >= theme(screens.${screen}))`
       ] = {
         content: `'${prefix}${screen}'`,
       };
